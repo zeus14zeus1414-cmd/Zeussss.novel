@@ -1,17 +1,18 @@
 {
   "expo": {
-    "name": "aplcions-zeuz",
-    "slug": "snack-bfbc8c28-8a6c-4943-9d50-bf2d56666246",
+    "name": "Zeuz",
+    "slug": "aplcions-zeuz",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "aplcionszeus",
-    "userInterfaceStyle": "light",
+    "scheme": "zeuzapp",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#000000",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
@@ -22,7 +23,23 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "Zeuz",
+      "shortName": "Zeuz",
+      "lang": "ar",
+      "display": "standalone",
+      "backgroundColor": "#000000",
+      "themeColor": "#000000",
+      "startUrl": "/",
+      "orientation": "portrait",
+      "description": "تطبيق Zeuz لقراءة الروايات",
+      "barStyle": "black-translucent",
+      "meta": {
+        "apple-mobile-web-app-capable": "yes",
+        "apple-mobile-web-app-status-bar-style": "black-translucent",
+        "mobile-web-app-capable": "yes",
+        "viewport": "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+      }
     }
   }
 }

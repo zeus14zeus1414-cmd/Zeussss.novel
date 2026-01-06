@@ -1,112 +1,76 @@
-
-
-import React, { useContext, useEffect } from 'react';
-import { NavigationContainer, DarkTheme } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useContext } from 'react';
+import { View, ActivityIndicator, Platform } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { View, ActivityIndicator } from 'react-native';
-import * as Linking from 'expo-linking';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+// Contexts
 import { AuthProvider, AuthContext } from './src/context/AuthContext';
-import { ToastProvider } from './src/context/ToastContext'; // Import ToastProvider
+import { ToastProvider } from './src/context/ToastContext';
 
+// Screens
 import HomeScreen from './src/screens/HomeScreen';
 import LibraryScreen from './src/screens/LibraryScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import NovelDetailScreen from './src/screens/NovelDetailScreen';
 import ReaderScreen from './src/screens/ReaderScreen';
-import CategoryScreen from './src/screens/CategoryScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import CategoryScreen from './src/screens/CategoryScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import SignupScreen from './src/screens/SignupScreen';
+
+// Admin Screens
+import AdminMainScreen from './src/screens/AdminMainScreen';
 import AdminDashboardScreen from './src/screens/AdminDashboardScreen';
-import ManagementScreen from './src/screens/ManagementScreen'; 
-import UsersManagementScreen from './src/screens/UsersManagementScreen'; 
-import AdminMainScreen from './src/screens/AdminMainScreen'; // New Import
-import BulkUploadScreen from './src/screens/BulkUploadScreen'; // New Import for Bulk Upload
+import ManagementScreen from './src/screens/ManagementScreen';
+import UsersManagementScreen from './src/screens/UsersManagementScreen';
+import BulkUploadScreen from './src/screens/BulkUploadScreen';
 
-const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function TabNavigator() {
+function MainTabs() {
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: '#0f0f0f',
-          borderTopColor: '#2a2a2a',
-          borderTopWidth: 1,
-          height: 65,
-          paddingBottom: 8,
+          backgroundColor: '#161616',
+          borderTopColor: '#333',
+          height: Platform.OS === 'ios' ? 88 : 60,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 8,
           paddingTop: 8,
+          position: Platform.OS === 'web' ? 'fixed' : 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          borderTopWidth: 1,
+          elevation: 0,
         },
         tabBarActiveTintColor: '#4a7cc7',
         tabBarInactiveTintColor: '#666',
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+          if (route.name === 'Home') iconName = focused ? 'home' : 'home-outline';
+          else if (route.name === 'Library') iconName = focused ? 'library' : 'library-outline';
+          else if (route.name === 'Profile') iconName = focused ? 'person' : 'person-outline';
+          return <Ionicons name={iconName} size={24} color={color} />;
         },
-      }}
+        tabBarLabelStyle: { fontSize: 10, fontWeight: '600' }
+      })}
     >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: 'الرئيسية',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Library"
-        component={LibraryScreen}
-        options={{
-          tabBarLabel: 'المكتبة',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="library" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'حسابي',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'الرئيسية' }} />
+      <Tab.Screen name="Library" component={LibraryScreen} options={{ title: 'المكتبة' }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'حسابي' }} />
     </Tab.Navigator>
   );
 }
 
-function NavigationRoot() {
-  const { userToken, login, loading } = useContext(AuthContext);
-
-  useEffect(() => {
-    const handleDeepLink = (event) => {
-      let data = Linking.parse(event.url);
-      if (data.path === 'auth' && data.queryParams?.token) {
-        login(data.queryParams.token);
-      }
-    };
-
-    const subscription = Linking.addEventListener('url', handleDeepLink);
-    
-    Linking.getInitialURL().then((url) => {
-      if (url) {
-        handleDeepLink({ url });
-      }
-    });
-
-    return () => {
-      subscription.remove();
-    };
-  }, []);
+function AppNavigation() {
+  const { userToken, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
@@ -116,56 +80,56 @@ function NavigationRoot() {
     );
   }
 
-  const appTheme = {
-    ...DarkTheme,
-    colors: {
-      ...DarkTheme.colors,
-      primary: '#4a7cc7',
-      background: '#0a0a0a',
-      card: '#0f0f0f',
-      text: '#fff',
-      border: '#2a2a2a',
-      notification: '#ff4444',
-    },
-  };
-
   return (
-    <NavigationContainer theme={appTheme} linking={{ prefixes: [Linking.createURL('/')] }}>
-      <Stack.Navigator
-        screenOptions={{
+    <NavigationContainer>
+      <Stack.Navigator 
+        screenOptions={{ 
           headerShown: false,
-          animation: 'slide_from_right',
-          contentStyle: { backgroundColor: '#0a0a0a' },
+          contentStyle: { backgroundColor: '#000' },
+          animation: 'slide_from_right', // Native-like transition for both Web and Mobile
         }}
       >
         {userToken ? (
           <>
-            <Stack.Screen name="MainTabs" component={TabNavigator} />
+            <Stack.Screen name="MainTabs" component={MainTabs} />
             <Stack.Screen 
               name="NovelDetail" 
-              component={NovelDetailScreen}
-              options={{ animation: 'slide_from_bottom' }}
+              component={NovelDetailScreen} 
+              options={{ animation: 'slide_from_right' }}
             />
             <Stack.Screen 
               name="Reader" 
-              component={ReaderScreen}
-              options={{ animation: 'fade' }}
+              component={ReaderScreen} 
+              options={{ animation: 'fade' }} 
             />
-            <Stack.Screen name="Category" component={CategoryScreen} />
-            <Stack.Screen name="Search" component={SearchScreen} />
-            <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} options={{ animation: 'slide_from_bottom' }} />
-            <Stack.Screen name="Management" component={ManagementScreen} options={{ animation: 'slide_from_right' }} />
-            <Stack.Screen name="UsersManagement" component={UsersManagementScreen} options={{ animation: 'slide_from_bottom' }} />
-            <Stack.Screen name="AdminMain" component={AdminMainScreen} options={{ animation: 'fade_from_bottom' }} />
-            <Stack.Screen name="BulkUpload" component={BulkUploadScreen} options={{ animation: 'slide_from_bottom' }} />
+            <Stack.Screen 
+              name="Search" 
+              component={SearchScreen} 
+              options={{ animation: 'fade_from_bottom' }}
+            />
+            <Stack.Screen 
+              name="Category" 
+              component={CategoryScreen} 
+              options={{ animation: 'slide_from_right' }}
+            />
             <Stack.Screen 
               name="UserProfile" 
               component={ProfileScreen} 
-              options={{ animation: 'slide_from_right' }} 
+              options={{ animation: 'slide_from_right' }}
             />
+            
+            {/* Admin/Contributor Routes */}
+            <Stack.Screen name="AdminMain" component={AdminMainScreen} />
+            <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
+            <Stack.Screen name="Management" component={ManagementScreen} />
+            <Stack.Screen name="UsersManagement" component={UsersManagementScreen} />
+            <Stack.Screen name="BulkUpload" component={BulkUploadScreen} />
           </>
         ) : (
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ animation: 'fade' }} />
+            <Stack.Screen name="Signup" component={SignupScreen} options={{ animation: 'slide_from_right' }} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
@@ -174,13 +138,14 @@ function NavigationRoot() {
 
 export default function App() {
   return (
-    <>
-      <StatusBar style="light" backgroundColor="#0a0a0a" />
-      <ToastProvider>
-        <AuthProvider>
-          <NavigationRoot />
-        </AuthProvider>
-      </ToastProvider>
-    </>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <ToastProvider>
+          {/* Translucent status bar makes the app feel immersive and native */}
+          <StatusBar style="light" translucent backgroundColor="transparent" />
+          <AppNavigation />
+        </ToastProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }
