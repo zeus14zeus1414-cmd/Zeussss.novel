@@ -1,24 +1,71 @@
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "expo-linear-gradient": "https://esm.sh/expo-linear-gradient@^15.0.8",
-    "@react-navigation/native-stack": "https://esm.sh/@react-navigation/native-stack@^7.9.0",
-    "@react-navigation/native": "https://esm.sh/@react-navigation/native@^7.1.26",
-    "@react-navigation/bottom-tabs": "https://esm.sh/@react-navigation/bottom-tabs@^7.9.0",
-    "@expo/vector-icons": "https://esm.sh/@expo/vector-icons@^15.0.3",
-    "react-native-safe-area-context": "https://esm.sh/react-native-safe-area-context@^5.6.2",
-    "axios": "https://esm.sh/axios@^1.13.2",
-    "expo-status-bar": "https://esm.sh/expo-status-bar@^3.0.9",
-    "react-native": "https://esm.sh/react-native@^0.83.1",
-    "expo-linking": "https://esm.sh/expo-linking@^8.0.11",
-    "expo": "https://esm.sh/expo@^54.0.30",
-    "expo-image": "https://esm.sh/expo-image@^3.0.11",
-    "expo-web-browser": "https://esm.sh/expo-web-browser@^15.0.10",
-    "@react-native-async-storage/async-storage": "https://esm.sh/@react-native-async-storage/async-storage@^2.2.0",
-    "react-native-webview": "https://esm.sh/react-native-webview@^13.16.0",
-    "expo-document-picker": "https://esm.sh/expo-document-picker@^14.0.8",
-    "expo-image-picker": "https://esm.sh/expo-image-picker@^17.0.10"
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  
+  <!-- Primary Meta Tags -->
+  <title>ZEUS Novel</title>
+  <meta name="title" content="ZEUS Novel">
+  <meta name="description" content="تطبيق ZEUS لقراءة الروايات العربية والمترجمة">
+  <meta name="theme-color" content="#000000">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- iOS Specific Configuration (Critical for Add to Home Screen) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ZEUS Novel">
+  
+  <!-- Icons (Must be absolute paths for safety) -->
+  <link rel="apple-touch-icon" href="/assets/logo.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.png">
+
+  <!-- Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@^19.2.3",
+      "react-dom": "https://esm.sh/react-dom@^19.0.0",
+      "expo-linear-gradient": "https://esm.sh/expo-linear-gradient@^15.0.8",
+      "@react-navigation/native-stack": "https://esm.sh/@react-navigation/native-stack@^7.9.0",
+      "@react-navigation/native": "https://esm.sh/@react-navigation/native@^7.1.26",
+      "@react-navigation/bottom-tabs": "https://esm.sh/@react-navigation/bottom-tabs@^7.9.0",
+      "@expo/vector-icons": "https://esm.sh/@expo/vector-icons@^15.0.3",
+      "react-native-safe-area-context": "https://esm.sh/react-native-safe-area-context@^5.6.2",
+      "axios": "https://esm.sh/axios@^1.13.2",
+      "expo-status-bar": "https://esm.sh/expo-status-bar@^3.0.9",
+      "react-native": "https://esm.sh/react-native@^0.83.1",
+      "expo-linking": "https://esm.sh/expo-linking@^8.0.11",
+      "expo": "https://esm.sh/expo@^54.0.30",
+      "expo-image": "https://esm.sh/expo-image@^3.0.11",
+      "expo-web-browser": "https://esm.sh/expo-web-browser@^15.0.10",
+      "@react-native-async-storage/async-storage": "https://esm.sh/@react-native-async-storage/async-storage@^2.2.0",
+      "react-native-webview": "https://esm.sh/react-native-webview@^13.16.0",
+      "expo-document-picker": "https://esm.sh/expo-document-picker@^14.0.8",
+      "expo-image-picker": "https://esm.sh/expo-image-picker@^17.0.10"
+    }
   }
-}
-</script>
+  </script>
+  
+  <style>
+    body, html, #root {
+      height: 100%;
+      width: 100%;
+      background-color: #000000;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: none; /* Prevents bounce on pull-to-refresh style actions in PWA */
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
