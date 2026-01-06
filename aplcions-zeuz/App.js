@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, ActivityIndicator, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -112,13 +112,7 @@ function AppNavigation() {
   }
 
   return (
-    <NavigationContainer 
-        linking={linking} 
-        fallback={<ActivityIndicator color="#4a7cc7" />}
-        documentTitle={{
-            formatter: (options, route) => 'ZEUS Novel' // Force title to stay correct for PWA install
-        }}
-    >
+    <NavigationContainer linking={linking} fallback={<ActivityIndicator color="#4a7cc7" />}>
       <Stack.Navigator 
         screenOptions={{ 
           headerShown: false,
@@ -174,15 +168,8 @@ function AppNavigation() {
 }
 
 export default function App() {
-  // Web specific: Ensure body color is black to avoid white flashes
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-        document.body.style.backgroundColor = '#000000';
-    }
-  }, []);
-
   return (
-    <SafeAreaViewProvider>
+    <SafeAreaProvider>
       <AuthProvider>
         <ToastProvider>
           {/* Translucent status bar makes the app feel immersive and native */}
@@ -190,6 +177,6 @@ export default function App() {
           <AppNavigation />
         </ToastProvider>
       </AuthProvider>
-    </SafeAreaViewProvider>
+    </SafeAreaProvider>
   );
 }
